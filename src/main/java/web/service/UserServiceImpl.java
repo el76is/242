@@ -1,5 +1,6 @@
 package web.service;
 
+import web.config.SecurityConfig;
 import web.dao.UserDao;
 import web.model.User;
 import org.springframework.stereotype.Service;
@@ -34,12 +35,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void create(User user) {
+        user.setPassword(SecurityConfig.passwordEncoder().encode(user.getPassword()));
         userDao.create(user);
     }
 
     @Override
     @Transactional
     public void update(User user) {
+        user.setPassword(SecurityConfig.passwordEncoder().encode(user.getPassword()));
         userDao.update(user);
     }
 

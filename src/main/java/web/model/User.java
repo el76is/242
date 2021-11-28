@@ -1,8 +1,10 @@
 package web.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import web.config.SecurityConfig;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.ManyToMany;
 import javax.persistence.FetchType;
+import javax.validation.constraints.Pattern;
 
 import java.util.Collection;
 import java.util.Set;
@@ -29,9 +32,11 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String name; // уникальное значение
 
+    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -120,7 +125,7 @@ public class User implements UserDetails {
     }
 
     public void setPassword(String password) {
-        this.password = SecurityConfig.passwordEncoder().encode(password);
+        this.password = password;
     }
 
     @Override

@@ -17,11 +17,14 @@ import web.model.User;
 import web.service.RoleService;
 import web.service.UserService;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 
 @Controller
 @RequestMapping("/")
+@Transactional
 public class UserController {
 
     private final UserService userService;
@@ -55,7 +58,7 @@ public class UserController {
     }
 
     @PostMapping("admin/create")
-    public String create(@ModelAttribute("user") User user, BindingResult bindingResult,
+    public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                          @RequestParam("roleName") String[] role) {
         if (bindingResult.hasErrors()) {
             return "create";
@@ -79,7 +82,7 @@ public class UserController {
     }
 
     @PutMapping("admin/{id}/update")
-    public String update(@ModelAttribute("user") User user, BindingResult bindingResult,
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                          @RequestParam("roleName") String[] role) {
         if (bindingResult.hasErrors()) {
             return "update";

@@ -41,6 +41,7 @@
                 <label for="password">Enter password:</label>
             </td>
             <td>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 <input type="password" th:field="*{password}" id="password"/>
             </td>
         </tr>

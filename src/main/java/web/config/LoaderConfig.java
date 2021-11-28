@@ -34,7 +34,6 @@ public class LoaderConfig {
         user1.setName("user1");
         user1.setPassword("user1");
         user1.setRoles(Set.of (roleAdm));
-
         user1.setFirstName("FirstName1");
         user1.setLastName("LastName1");
         user1.setEmail("user1@somewhere.net");
